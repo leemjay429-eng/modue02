@@ -112,7 +112,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
     }
   },
   "organizer": { "@type": "Organization", "name": "명량대첩축제조직위원회", "url": "https://mldc.kr/" },
-  "image": ["https://www.jeonnam-gwangju.go.kr/img/2026%20%EB%AA%85%EB%9F%89%EB%8C%80%EC%B2%A9%20%EC%B6%95%EC%A0%9C%5D.jpg"],
+  "image": ["https://www.jeonnam-gwangju.go.kr/img/2026%20%EB%AA%85%EB%9F%89%EB%8C%80%EC%B2%A9%20%EC%B6%95%EC%A0%9C.webp"],
   "url": "https://www.jeonnam-gwangju.go.kr/benefits/2026-09-2week#bnf-b2"
 }
 </script>
@@ -139,7 +139,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
     }
   },
   "organizer": { "@type": "Organization", "name": "전남광주통합특별시", "url": "https://www.jeonnam-gwangju.go.kr/" },
-  "image": ["https://www.jeonnam-gwangju.go.kr/img/%EC%A0%84%EB%82%A8%EA%B4%91%EC%A3%BCGT.png"],
+  "image": ["https://www.jeonnam-gwangju.go.kr/img/%EC%A0%84%EB%82%A8%EA%B4%91%EC%A3%BCGT.webp"],
   "sameAs": "https://www.koreacircuit.com/GTIntroduce",
   "url": "https://www.jeonnam-gwangju.go.kr/benefits/2026-09-2week#bnf-b3"
 }
@@ -194,7 +194,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
     }
   },
   "organizer": { "@type": "Organization", "name": "전남광주통합특별시", "url": "https://www.jeonnam-gwangju.go.kr/" },
-  "image": ["https://www.jeonnam-gwangju.go.kr/img/%EC%A0%84%EB%82%A8%EA%B4%91%EC%A3%BC%20%EC%98%88%EC%88%A0%EC%9D%98%EC%A0%84%EB%8B%B9%20%EA%B7%B8%EB%9D%BC%EC%A0%9C.jpg"],
+  "image": ["https://www.jeonnam-gwangju.go.kr/img/%EC%A0%84%EB%82%A8%EA%B4%91%EC%A3%BC%20%EC%98%88%EC%88%A0%EC%9D%98%EC%A0%84%EB%8B%B9%20%EA%B7%B8%EB%9D%BC%EC%A0%9C.webp"],
   "sameAs": "https://gjart.gwangju.go.kr/ko/cmd.do",
   "url": "https://www.jeonnam-gwangju.go.kr/benefits/2026-09-2week#bnf-b5"
 }
@@ -1057,7 +1057,54 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
   .contents_div .jngj-hero-stage{height:0;padding-top:107.5%}
 }
 
+/* ── 스크롤 등장 : 히어로 아래 블록 (프리픽스 bnf-rv) ──────────
+   .is-bnf-rv 는 스크립트가 붙인다 → JS 미동작 시 전부 그냥 보인다
+   히어로는 자체 모션이 있으므로 제외
+   ─────────────────────────────────────────────────────────── */
+.contents_div.is-bnf-rv .bnf-intro,
+.contents_div.is-bnf-rv .bnf-toc,
+.contents_div.is-bnf-rv .bnf-card,
+.contents_div.is-bnf-rv .bnf-tags{
+  opacity:0;
+  transform:translate3d(0,20px,0);
+  will-change:opacity, transform;
+}
+
+/* 전환은 등장 상태에만 건다 → 초기 숨김이 순간 적용되어 깜빡임이 없다 */
+.contents_div.is-bnf-rv .bnf-intro.is-bnf-in,
+.contents_div.is-bnf-rv .bnf-toc.is-bnf-in,
+.contents_div.is-bnf-rv .bnf-card.is-bnf-in,
+.contents_div.is-bnf-rv .bnf-tags.is-bnf-in{
+  opacity:1;
+  transform:translate3d(0,0,0);
+  transition:opacity 700ms cubic-bezier(.22,.68,.36,1),
+             transform 700ms cubic-bezier(.22,.68,.36,1);
+  will-change:auto;
+}
+
+/* 위쪽 공통 reduce 규칙이 transition 을 끄므로 숨김 상태로 남지 않게 고정 */
+@media (prefers-reduced-motion:reduce){
+  .contents_div.is-bnf-rv .bnf-intro,
+  .contents_div.is-bnf-rv .bnf-toc,
+  .contents_div.is-bnf-rv .bnf-card,
+  .contents_div.is-bnf-rv .bnf-tags{
+    opacity:1!important;
+    transform:none!important;
+  }
+}
+
 </style>
+
+<script>
+/* 스크롤 등장 활성화 — 콘텐츠가 그려지기 전에 실행되어야 깜빡임이 없다 */
+(function(){
+  var root = document.currentScript && document.currentScript.closest('.contents_div');
+  if(!root) return;
+  if(!('IntersectionObserver' in window) || !('Promise' in window)) return;
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  root.classList.add('is-bnf-rv');
+})();
+</script>
 
 <article class="bnf-page" lang="ko">
 
@@ -1069,39 +1116,50 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
         <!-- 배경 (z-index:1) — 처음부터 끝까지 노출 -->
         <img class="jngj-layer jngj-layer--bg"
              src="img/히어로배경.webp"
-             width="1600" height="1720" sizes="(max-width:800px) 100vw, 800px"
+             srcset="img/히어로배경.webp 1600w" sizes="(max-width:800px) 100vw, 800px"
+             width="1600" height="1720"
              fetchpriority="high" loading="eager" decoding="async"
              alt="전남광주통합특별시 이번 주 기간 한정 꿀혜택">
 
         <!-- coupon -->
         <div class="jngj-item jngj-item--coupon">
           <img class="jngj-item__img" src="img/반값쿠폰.webp"
-               width="1600" height="1720" decoding="async"
+               srcset="img/반값쿠폰.webp 1600w" sizes="(max-width:800px) 100vw, 800px"
+               width="1600" height="1720"
+               fetchpriority="low" loading="eager" decoding="async"
                alt="전남광주 섬 반값여행 50% 캐시백 쿠폰" aria-hidden="true">
         </div>
         <!-- biennale -->
         <div class="jngj-item jngj-item--biennale">
           <img class="jngj-item__img" src="img/비엔날레.webp"
-               width="1600" height="1720" decoding="async"
+               srcset="img/비엔날레.webp 1600w" sizes="(max-width:800px) 100vw, 800px"
+               width="1600" height="1720"
+               fetchpriority="low" loading="eager" decoding="async"
                alt="제16회 광주비엔날레" aria-hidden="true">
         </div>
         <!-- blue -->
         <div class="jngj-item jngj-item--blue">
           <img class="jngj-item__img" src="img/히어로_딥블루.webp"
-               width="1600" height="1720" decoding="async"
+               srcset="img/히어로_딥블루.webp 1600w" sizes="(max-width:800px) 100vw, 800px"
+               width="1600" height="1720"
+               fetchpriority="low" loading="eager" decoding="async"
                alt="전남광주GT" aria-hidden="true">
         </div>
         <!-- green -->
         <div class="jngj-item jngj-item--green">
           <img class="jngj-item__img" src="img/히어로_그린.webp"
-               width="1600" height="1720" decoding="async"
+               srcset="img/히어로_그린.webp 1600w" sizes="(max-width:800px) 100vw, 800px"
+               width="1600" height="1720"
+               fetchpriority="low" loading="eager" decoding="async"
                alt="여수세계섬박람회" aria-hidden="true">
         </div>
 
         <!-- 편지봉투 (z-index:999) — 처음부터 끝까지 노출 -->
         <img class="jngj-layer jngj-layer--envelope"
              src="img/히어로편지봉투.webp"
-             width="1600" height="1720" decoding="async"
+             srcset="img/히어로편지봉투.webp 1600w" sizes="(max-width:800px) 100vw, 800px"
+             width="1600" height="1720"
+             fetchpriority="high" loading="eager" decoding="async"
              alt="" aria-hidden="true">
 
       </div>
@@ -1161,7 +1219,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
       <figure class="bnf-poster is-icon">
         <button type="button" class="bnf-poster__btn" aria-label="2026 명량대첩 축제 포스터 크게 보기">
           <img
-               src="img/2026 명량대첩 축제].jpg"
+               src="img/2026 명량대첩 축제.webp"
                alt="2026 명량대첩 축제 안내 아이콘" loading="lazy" decoding="async">
           <span class="bnf-poster__hint">크게 보기</span>
         </button>
@@ -1187,7 +1245,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
       <figure class="bnf-poster is-icon">
         <button type="button" class="bnf-poster__btn" aria-label="2026 전남광주GT 포스터 크게 보기">
           <img
-               src="img/전남광주GT.png"
+               src="img/전남광주GT.webp"
                alt="2026 전남광주GT 모터스포츠 축제 안내 아이콘" loading="lazy" decoding="async">
           <span class="bnf-poster__hint">크게 보기</span>
         </button>
@@ -1244,7 +1302,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
       <figure class="bnf-poster is-icon">
         <button type="button" class="bnf-poster__btn" aria-label="전남광주 예술의전당 그라제 포스터 크게 보기">
           <img
-               src="img/전남광주 예술의전당 그라제.jpg"
+               src="img/전남광주 예술의전당 그라제.webp"
                alt="전남광주 예술의전당 그라제 안내 아이콘" loading="lazy" decoding="async">
           <span class="bnf-poster__hint">크게 보기</span>
         </button>
@@ -1269,7 +1327,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
       <figure class="bnf-poster is-icon">
         <button type="button" class="bnf-poster__btn" aria-label="전남광주 섬 반값여행 포스터 크게 보기">
           <img
-               src="img/섬반값여행.jpg"
+               src="img/섬반값여행.webp"
                alt="전남광주 섬 반값여행 안내 아이콘" loading="lazy" decoding="async">
           <span class="bnf-poster__hint">크게 보기</span>
         </button>
@@ -1578,11 +1636,70 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
     });
   }, {
     root: null,
-    threshold: 0.25,
-    rootMargin: '0px 0px -8% 0px'
+    threshold: 0.35,          /* 히어로의 35%가 뷰포트에 들어오면 발동 */
+    rootMargin: '0px'         /* 35%가 그대로 35%가 되도록 여백 보정 없음 */
   });
 
   io.observe(stage);
+})();
+</script>
+
+<script>
+/* ── 스크롤 등장 : 뷰포트 진입 시 1회 페이드업 ── */
+(function () {
+  var root = document.querySelector('.contents_div');
+  if(!root || !root.classList.contains('is-bnf-rv')) return;
+
+  var targets = root.querySelectorAll('.bnf-intro, .bnf-toc, .bnf-card, .bnf-tags');
+  if(!targets.length) return;
+
+  /* 블록 안 이미지가 자리를 잡을 때까지 기다린다.
+     포스터 img 에 width/height 가 없어 로드 순간 float 폭이 생기며 리플로가 난다.
+     등장 도중에 그 리플로가 겹치면 버벅여 보이므로, 디코드 후에 등장시킨다.
+     (안전 타임아웃 900ms — 이미지가 안 떠도 블록이 숨은 채로 남지 않게) */
+  function settled(el){
+    var imgs = [].slice.call(el.querySelectorAll('img'));
+    if(!imgs.length) return Promise.resolve();
+
+    var done = Promise.all(imgs.map(function(im){
+      if(im.complete && im.naturalWidth){
+        return im.decode ? im.decode()['catch'](function(){}) : Promise.resolve();
+      }
+      return new Promise(function(res){
+        im.addEventListener('load', function(){
+          if(im.decode){ im.decode()['catch'](function(){}).then(res); } else { res(); }
+        }, { once:true });
+        im.addEventListener('error', res, { once:true });
+      });
+    }));
+
+    return Promise.race([
+      done,
+      new Promise(function(res){ setTimeout(res, 900); })
+    ]);
+  }
+
+  var io = new IntersectionObserver(function (entries, obs) {
+    var i = 0;
+    entries.forEach(function (entry) {
+      if(!entry.isIntersecting) return;
+      var el = entry.target;
+      obs.unobserve(el);
+      /* 같은 프레임에 여러 개가 들어오면 순차로 터지게 한다 */
+      var delay = (i * 80) + 'ms';
+      i++;
+      settled(el).then(function(){
+        el.style.transitionDelay = delay;
+        el.classList.add('is-bnf-in');
+      });
+    });
+  }, {
+    root: null,
+    threshold: 0,
+    rootMargin: '0px 0px -10% 0px'
+  });
+
+  targets.forEach(function (el) { io.observe(el); });
 })();
 </script>
 </div>
