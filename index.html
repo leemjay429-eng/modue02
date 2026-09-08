@@ -696,6 +696,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 .contents_div .bnf-br330,
 .contents_div .bnf-br370,
 .contents_div .bnf-br388,
+.contents_div .bnf-br430,
 .contents_div .bnf-br450{display:none}
 
 .contents_div .bnf-br-web{display:none}
@@ -828,6 +829,13 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 /* ── 좁은 모바일 ──────────────────────────────────────────── */
 @container bnfroot (max-width:450px){
   .contents_div .bnf-br450{display:inline}
+}
+/* h2 고정 줄바꿈 : 뷰포트 430px 이하 (컨테이너는 32px 오프셋 보정) */
+@media (max-width:430px){
+  .contents_div .bnf-br430{display:inline}
+}
+@container bnfroot (max-width:398px){
+  .contents_div .bnf-br430{display:inline}
 }
 @container bnfroot (max-width:290px){
   .contents_div .bnf-br388{display:inline}
@@ -1193,7 +1201,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
       </figure>
       <div class="bnf-card__body">
         <div class="bnf-card__meta"><span class="bnf-chip is-youth">축제</span><span class="bnf-dday">9. 5.(토) 개막</span></div>
-        <h2>광주비엔날레&amp;여수세계섬박람회<br><strong>9월 5일 동시에 스타트</strong></h2>
+        <h2><strong>광주비엔날레&amp;<br class="bnf-br430">여수세계섬박람회</strong><br>9월 5일 동시에 스타트</h2>
         <p class="bnf-lede">전남광주통합특별시의 대형 국제행사인 <b class="bnf-hl">제16회 광주비엔날레와 2026 여수세계섬박람회가 동시에 개막</b>했습니다. 섬박람회와 광주비엔날레를 더 즐겁게, 폭넓게 만나는 방법을 지금 확인해 보세요!</p>
       </div>
     </div>
@@ -1226,7 +1234,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
       </figure>
       <div class="bnf-card__body">
         <div class="bnf-card__meta"><span class="bnf-chip is-youth">축제</span><span class="bnf-dday">9. 11.(금) 개막</span></div>
-        <h2>이순신 장군의 승리를 기억하며!<br><strong>2026 명량대첩 축제</strong> 개최</h2>
+        <h2>이순신 장군의<br class="bnf-br430"> 승리를 기억하며!<br><strong>2026 명량대첩 축제</strong> 개최</h2>
         <p class="bnf-lede">이순신 장군이 이끄는 조선 수군이 울돌목에서 일본 수군을 상대로 승리를 거두었던 명량대첩을 2026년에 만나보세요. 진도와 해남 울돌목 일원에서 <b class="bnf-hl">2026 명량대첩 축제가 열립니다</b>.</p>
         <p class="bnf-lede">올해 축제는 개막식과 주제공연, 대규모 출정 퍼레이드, 해상 퍼레이드, 축하공연 등 역사와 문화가 어우러진 다양한 프로그램을 준비 중인데요. 특히 약 1천 200명이 참여하는 대규모 출정 퍼레이드는 명량대첩의 하이라이트가 될 예정이에요.</p>
       </div>
@@ -1279,7 +1287,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
       </figure>
       <div class="bnf-card__body">
         <div class="bnf-card__meta"><span class="bnf-chip is-youth">축제</span><span class="bnf-dday">9. 9.(수) 개막</span></div>
-        <h2>공공기관 이전 12주년을 축하합니다<br><strong>빛가람 페스티벌</strong>에서 만나요</h2>
+        <h2>공공기관 이전<br class="bnf-br430"> 12주년을 축하합니다<br><strong>빛가람 페스티벌</strong>에서 만나요</h2>
         <p class="bnf-lede">나주 빛가람혁신도시에서 <b class="bnf-hl">공공기관 이전 12주년을 기념</b>해 임직원과 지역주민이 함께 어울리고 소통하는 ‘빛가람 페스티벌’이 열려요.</p>
         <p class="bnf-lede">올해는 무대공연 중심에서 벗어나 이전 공공기관이 직접 참여하는 특강, 체험, 문화 프로그램이 혁신도시 곳곳에서 운영되는 것이 특징! 먹거리장터 7개소와 푸드트럭 5대가 참여하는 푸드존, 지역주민 중심의 20개 업체가 참여하는 플리마켓까지 몽땅 즐겨보세요.</p>
       </div>
